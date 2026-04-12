@@ -184,7 +184,7 @@ export default function ContactPage() {
                   {[
                     { icon: Mail,   label: "Email",   value: "info@filmsfocus.com",        sub: "We respond within 24 hours" },
                     { icon: Phone,  label: "Phone",   value: "+1 (443) 416-2928",           sub: "Mon – Fri, 9 AM – 6 PM EST" },
-                    { icon: MapPin, label: "Address", value: "1201 Mikara Court, Bel Air", sub: "Maryland 21015, USA" },
+                    { icon: MapPin, label: "Address", value: "7677 Canton Center Dr Baltimore, Maryland 21202, USA" },
                   ].map((item) => {
                     const Icon = item.icon;
                     return (
