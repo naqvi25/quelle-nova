@@ -28,7 +28,8 @@ const SERVICES = [
 const NAV_LINKS = [
   { label: "Home",         href: "/" },
   { label: "Industries",   href: "/industries",  dropdown: INDUSTRIES },
-  { label: "Services",     href: "/services",    dropdown: SERVICES },
+  { label: "Services",     href: "/services" },
+  // { label: "Services",     href: "/services",    dropdown: SERVICES },
   { label: "Capabilities", href: "/capabilities" },
   { label: "About Us",     href: "/about" },
   { label: "Contact Us",   href: "/contact" },
