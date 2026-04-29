@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import {
   BarChart2, TrendingUp, Globe, Users, Settings,
-  Target, Shield, Building2, Link2, Layers, Receipt,
+  Target, Shield, Building2, Link2, Layers,
   ArrowRight, CheckCircle, ChevronRight, ChevronDown,
 } from "lucide-react";
 import { motion, AnimatePresence, useInView, useMotionValue, useSpring } from "framer-motion";
@@ -14,6 +14,11 @@ import {
   BackgroundDesign, CursorGlow, FadeIn, FadeIn2, SlateBackground,
   CTABanner, SectionLabel, PrimaryButton,
 } from "@/components/ui/shared";
+import {FINANCIAL_ADVISORY} from "@/lib/images/base64";
+import {CORPORATE_ADVISORY} from "@/lib/images/base64";
+import {DEEP_TECH_COMMERCIALIZATION} from "@/lib/images/base64";
+
+
 
 // ─── ANIMATED COUNTER ─────────────────────────────────────────────────────────
 
@@ -197,21 +202,20 @@ const HERO_TRACKS = [
   },
   {
     id: "growth", label: "Business Growth", color: "blue", icon: TrendingUp,
-    tagline: "Market entry, sales development & capability building",
+    tagline: "Technology commercialization, market entry & investor readiness",
     services: [
-      { icon: Globe,    name: "Market Entry & Growth Strategy" },
-      { icon: Users,    name: "Sales & Partnership Development" },
-      { icon: Settings, name: "Business Process & Capability Building" },
+      { icon: Globe,    name: "Commercialization Strategy" },
+      { icon: Users,    name: "Customer Discovery & Validation" },
+      { icon: Settings, name: "Investor Readiness & Funding" },
     ],
   },
   {
     id: "corporate", label: "Corporate Advisory", color: "amber", icon: Building2,
-    tagline: "M&A, deal structuring, tax & cross-border investment",
+    tagline: "M&A, deal structuring & cross-border investment",
     services: [
       { icon: Building2, name: "Investment Banking" },
       { icon: Link2,     name: "Mergers & Acquisitions" },
       { icon: Layers,    name: "Deal Structuring" },
-      { icon: Receipt,   name: "Tax Advisory" },
       { icon: Globe,     name: "Cross-Border Investments" },
     ],
   },
@@ -232,19 +236,40 @@ const FINANCIAL_PILLARS = [
 
 const GROWTH_PILLARS = [
   {
-    icon: Globe, title: "Market Entry & Growth Strategy",
-    desc: "Research-backed market entry, go-to-market strategy and revenue model design for sustainable expansion.",
-    items: ["Market research and opportunity assessment","Go-to-market strategy development","Pricing and revenue model design","Expansion and diversification planning"],
+    icon: Globe, title: "Commercialization & Go-To-Market",
+    desc: "We help product and deep-tech startups move from technology to market, faster. We have already enabled two successful deployments — one in automotive and one in a defense-related product category.",
+    items: [
+      "Use-case and application prioritization",
+      "GTM and market entry strategy",
+      "Customer discovery and market validation",
+      "Corporate partner and early adopter access",
+      "Pilot and deployment pathway design",
+      "Commercial proof assets — pilot briefs and partner-facing decks",
+    ],
   },
   {
     icon: Users, title: "Sales & Partnership Development",
-    desc: "Pipeline structuring, channel development and deal-structuring support to accelerate revenue growth.",
-    items: ["Sales strategy and pipeline structuring","Channel and partnership development","Client acquisition and retention frameworks","Proposal, pitch, and deal-structuring support"],
+    desc: "We open the right industry doors and help startups gain early traction. Our network spans manufacturers, system integrators and industrial buyers across 11 verticals.",
+    items: [
+      "Sales strategy and pipeline structuring",
+      "Channel and partnership development",
+      "Corporate partner introductions",
+      "Proposal, pitch and deal-structuring support",
+      "Client acquisition and retention frameworks",
+      "Access to Quelle Nova's verified manufacturer network",
+    ],
   },
   {
-    icon: Settings, title: "Business Process & Capability Building",
-    desc: "Business model refinement, KPI frameworks and operational efficiency programmes for scalable growth.",
-    items: ["Business model evaluation and refinement","Process mapping and operational efficiency","KPI design and performance tracking","Leadership and team alignment support"],
+    icon: Settings, title: "Investor Readiness & Funding Access",
+    desc: "Beyond GTM execution, we help companies sharpen their growth narrative and connect with relevant funding portfolios and industry-aligned investors where strategic capital can support scale.",
+    items: [
+      "Growth narrative and investment story",
+      "Funding portfolio mapping",
+      "Industry-focused investor introductions",
+      "Strategic capital and co-investor access",
+      "Investor materials and readiness support",
+      "Alignment of funding with commercial milestones",
+    ],
   },
 ];
 
@@ -263,11 +288,6 @@ const ADVISORY_SERVICES = [
     icon: Layers, title: "Deal Structuring", color: "purple",
     desc: "We utilise deep financial insight to design tailored deal structures that align with client goals, maximising benefits while minimising financial and commercial risks.",
     points: ["Transaction architecture and risk allocation","Negotiation support and term sheet design","Regulatory and compliance review","Closing and settlement coordination"],
-  },
-  {
-    icon: Receipt, title: "Tax Advisory", color: "cyan",
-    desc: "Our tax specialists provide strategic planning solutions that enable clients to achieve their financial objectives while ensuring full regulatory compliance across jurisdictions.",
-    points: ["Cross-border tax planning and structuring","Transfer pricing advisory","Tax-efficient investment and holding structures","Compliance and regulatory reporting support"],
   },
   {
     icon: Globe, title: "Cross-Border Investments", color: "green",
@@ -362,7 +382,7 @@ export default function ServicesPage() {
       {/* ══════════════════════════════════════════════════
           HERO
       ══════════════════════════════════════════════════ */}
-      <section className="relative pt-40 pb-24 overflow-hidden">
+      <section className="relative pt-30 pb-24 overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_50%_-10%,rgba(147,51,234,0.08),transparent)]" />
         <motion.div className="absolute top-32 right-16 w-[500px] h-[500px] rounded-full pointer-events-none"
           style={{ background: "radial-gradient(circle, rgba(147,51,234,0.06) 0%, transparent 65%)" }}
@@ -372,7 +392,7 @@ export default function ServicesPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
 
             {/* Left */}
-            <div className="pt-6">
+            <div className="pt-2">
               <FadeIn2 delay={0.08}>
                 <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-purple-500/20 bg-purple-500/5 backdrop-blur-md mb-8">
                   <span className="relative flex h-2 w-2">
@@ -380,18 +400,21 @@ export default function ServicesPage() {
                       animate={{ scale: [1, 2.2, 1], opacity: [0.75, 0, 0.75] }} transition={{ duration: 2, repeat: Infinity }} />
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-purple-500" />
                   </span>
-                  <span className="text-xs font-semibold text-purple-400 uppercase tracking-widest">Strategic · Integrated · Insightful</span>
+                  <span className="text-xs font-semibold text-purple-400 uppercase tracking-widest">Manufacturers · Product Companies · Deep-Tech Startups</span>
                 </div>
               </FadeIn2>
               <FadeIn2 delay={0.18}>
-                <h1 className="text-7xl md:text-8xl font-bold tracking-tighter text-white mb-5 leading-[0.95]">
-                  Our<br />
-                  <span className="bg-gradient-to-r from-purple-400 via-blue-400 to-indigo-400 bg-clip-text text-transparent">Services</span>
+                <h1 className="text-5xl md:text-6xl lg:text-6xl font-bold tracking-tighter text-white mb-5 leading-[0.95]">
+                  Integrated Advisory for Financial Planning, Growth 
+                  and
+                  <br />
+
+                  <span className="bg-gradient-to-r from-purple-400 via-blue-400 to-indigo-400 bg-clip-text text-transparent"> Cross-Border Expansion</span>
                 </h1>
               </FadeIn2>
               <FadeIn2 delay={0.28}>
                 <p className="text-xl text-zinc-400 mb-10 leading-relaxed max-w-md">
-                  End-to-end advisory across financial planning, business growth, M&A, deal structuring, tax and cross-border investment — all in one integrated practice.
+                  Quelle Nova supports manufacturers, product companies and deep-tech startups across financial planning, commercialization, strategic transactions and cross-border growth — connecting strategy with real market execution.
                 </p>
               </FadeIn2>
               <FadeIn2 delay={0.36} className="flex flex-wrap gap-4 mb-14">
@@ -408,9 +431,9 @@ export default function ServicesPage() {
               <FadeIn2 delay={0.44}>
                 <div className="flex gap-10">
                   {[
-                    { val: 10, suffix: "+", label: "Advisory Services" },
+                    { val: 8,  suffix: "+", label: "Advisory Services" },
                     { val: 3,  suffix: "",  label: "Practice Areas"    },
-                    { val: 5,  suffix: "",  label: "Corporate Tracks"  },
+                    { val: 11, suffix: "",  label: "Industries Served" },
                   ].map(({ val, suffix, label }) => (
                     <div key={label}>
                       <div className="text-3xl font-bold text-white font-mono">
@@ -538,7 +561,6 @@ export default function ServicesPage() {
                   }}
                   transition={{ duration: 3, repeat: Infinity }}
                 >
-                  {/* Right arrow on mobile, down arrow on desktop */}
                   {/* Down arrow on mobile, right arrow on desktop */}
                   <svg className="lg:hidden w-6 h-6 text-purple-400" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
@@ -669,7 +691,7 @@ export default function ServicesPage() {
             <FadeIn delay={0.2}>
               <div className="relative rounded-2xl overflow-hidden" style={{ height: "100%" }}>
                 <img
-                  src="https://images.unsplash.com/photo-1579532537598-459ecdaf39cc?w=800&q=80"
+                  src={FINANCIAL_ADVISORY}
                   alt="Financial advisory"
                   className="absolute inset-0 w-full h-full object-cover"
                 />
@@ -702,86 +724,127 @@ export default function ServicesPage() {
       <section id="growth" className="relative py-24 bg-slate-900">
         <SlateBackground />
         <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <FadeIn className="mb-12">
+
+          <FadeIn className="mb-14">
             <SectionLabel text="Practice Area 02" />
             <h2 className="text-4xl font-bold text-white mb-3">Business Growth</h2>
             <p className="text-zinc-400 text-lg max-w-3xl leading-relaxed">
-              We help organisations identify and pursue sustainable growth through market analysis, strategic planning and capability building — enabling profitable growth and long-term success.
+              We help product and deep-tech startups move from technology to market, faster — connecting promising solutions with the right commercial pathways and accelerating real-world adoption.
             </p>
           </FadeIn>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-14">
-            {GROWTH_PILLARS.map((pillar, i) => {
-              const Icon = pillar.icon;
-              return (
-                <motion.div key={pillar.title}
-                  initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{ duration: 0.55, delay: i * 0.1 }}
-                  whileHover={{ y: -5 }}
-                  className="p-8 rounded-2xl border border-blue-500/15 bg-white/[0.01] hover:border-blue-400/30 transition-all group"
-                >
-                  <motion.div whileHover={{ rotate: 8, scale: 1.1 }}
-                    className="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center mb-5"
-                  >
-                    <Icon className="w-6 h-6 text-blue-400" />
-                  </motion.div>
-                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-blue-300 transition-colors">{pillar.title}</h3>
-                  <p className="text-zinc-500 text-sm mb-5 leading-relaxed">{pillar.desc}</p>
-                  <ul className="space-y-3">
-                    {pillar.items.map((item) => (
-                      <li key={item} className="flex items-start gap-3 text-zinc-300 text-sm">
-                        <CheckCircle className="w-4 h-4 shrink-0 mt-0.5 text-blue-400" /> {item}
-                      </li>
-                    ))}
-                  </ul>
-                </motion.div>
-              );
-            })}
+          {/* Main narrative + proof */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-14">
+
+            {/* Left: full narrative */}
+            <FadeIn delay={0.1}>
+              <div className="space-y-6">
+                <div className="p-8 rounded-2xl border border-blue-500/15 bg-white/[0.01]">
+                  <p className="text-zinc-300 text-base leading-relaxed mb-5">
+Our strength lies in turning technical potential into real commercial pathways. We help companies validate target applications, identify early adopters, build pilot opportunities, access strategic partners, prepare for funding conversations and explore acquisition or JV-led growth where it makes sense.                  </p>
+                  <p className="text-zinc-400 text-base leading-relaxed mb-5">
+Our support goes beyond strategy documents. We help create the market logic, partner narrative, proof assets and outreach pathways needed to convert technology into customers, partnerships, capital and scale.
+                  </p>
+                  {/* <p className="text-zinc-400 text-base leading-relaxed">
+                    We also support investor readiness by helping companies sharpen their growth narrative, map relevant funding portfolios and identify industry-focused investors or strategic capital partners where funding can support scale.
+                  </p> */}
+                </div>
+
+                {/* Proof points */}
+                {/* <div className="grid grid-cols-2 gap-4">
+                  {[
+                    { val: "2",        label: "Live Deployments",      color: "text-blue-400"   },
+                    { val: "Automotive", label: "Sector: Deployment 1", color: "text-indigo-400" },
+                    { val: "Defence",   label: "Sector: Deployment 2",  color: "text-purple-400" },
+                    { val: "11",       label: "Industries We Reach",    color: "text-blue-400"   },
+                  ].map(({ val, label, color }) => (
+                    <motion.div key={label}
+                      whileHover={{ y: -3 }}
+                      className="p-5 rounded-2xl border border-white/5 bg-white/[0.01] transition-all"
+                    >
+                      <div className={`text-2xl font-bold font-mono mb-0.5 ${color}`}>{val}</div>
+                      <div className="text-zinc-500 text-xs">{label}</div>
+                    </motion.div>
+                  ))}
+                </div> */}
+              </div>
+            </FadeIn>
+
+            {/* Right: where we help */}
+            <FadeIn delay={0.2}>
+              <div className="p-8 rounded-2xl border border-blue-500/15 bg-[#07070c] h-full">
+                <p className="text-zinc-500 text-xs font-mono uppercase tracking-widest mb-2">Full Scope</p>
+                <h4 className="text-white font-bold text-lg mb-7">Where We Help</h4>
+                <div className="space-y-3">
+                  {[
+                    { icon: Target,      label: "Customer discovery and market validation"                        },
+                    { icon: Layers,      label: "Use-case and application prioritization"                         },
+                    { icon: Globe,       label: "GTM and market entry strategy"                                   },
+                    { icon: Users,       label: "Corporate partner and early adopter access"                      },
+                    { icon: Settings,    label: "Pilot and deployment pathway design"                             },
+                    { icon: TrendingUp,  label: "Sales and partnership development"                               },
+                    { icon: BarChart2,   label: "Commercial proof assets — pilot briefs and partner-facing decks" },
+                    { icon: Building2,   label: "Investor readiness and funding portfolio mapping"                 },
+                    { icon: Link2,       label: "Strategic capital and industry-aligned investor introductions"    },
+                  ].map(({ icon: Icon, label }, i) => (
+                    <motion.div key={label}
+                      initial={{ opacity: 0, x: 16 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.25 + i * 0.06, ease: [0.16, 1, 0.3, 1] }}
+                      whileHover={{ x: 4 }}
+                      className="flex items-start gap-3 p-3 rounded-xl hover:bg-white/[0.03] transition-all group"
+                    >
+                      <div className="w-7 h-7 rounded-lg bg-blue-500/10 border border-blue-500/15 flex items-center justify-center shrink-0 mt-0.5 group-hover:border-blue-400/30 transition-colors">
+                        <Icon size={13} className="text-blue-400" />
+                      </div>
+                      <span className="text-zinc-300 text-sm leading-snug group-hover:text-white transition-colors self-center">{label}</span>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </FadeIn>
           </div>
 
-          {/* Growth metrics + image */}
+          {/* Bar chart */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-
-            {/* Image */}
+            
             <FadeIn delay={0.1}>
-              <div className="relative rounded-2xl overflow-hidden h-full min-h-[360px]">
-                <img
-                  src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80"
-                  alt="Business growth"
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#020202] via-[#020202]/50 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-6">
-                  <p className="text-zinc-400 text-sm mb-4 leading-relaxed">
-                    We help businesses move from reactive operations to proactive, data-driven growth strategies.
+              <div className="rounded-2xl border border-blue-500/15 bg-[#07070c] overflow-hidden h-full min-h-[300px] flex flex-col">
+                {/* Image strip — top third */}
+                <div className="relative h-94 overflow-hidden shrink-0">
+                  <img
+                    src={DEEP_TECH_COMMERCIALIZATION}
+                    alt="Deep-tech commercialization"
+                    className="w-full h-full object-cover object-top"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#07070c]/10 to-[#07070c]" />
+                  <div className="absolute top-3 left-3">
+                    <span className="px-2.5 py-1 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-400 text-[10px] font-mono uppercase tracking-widest">
+                      Deep-Tech · Product
+                    </span>
+                  </div>
+                </div>
+                {/* Content */}
+                <div className="p-6 flex flex-col flex-1">
+                  <p className="text-white font-bold text-lg mb-2">From prototype to market</p>
+                  <p className="text-zinc-400 text-md leading-relaxed mb-3 flex-1">
+                    We bridge the gap between technical readiness and commercial deployment — connecting deep-tech companies with Quelle Nova's verified manufacturer network, industry partners and aligned investors.
                   </p>
-                  <Link href="/contact">
-                    <motion.button whileHover={{ x: 4 }}
-                      className="flex items-center gap-2 text-blue-400 font-semibold text-sm"
-                    >
-                      Start your growth journey <ArrowRight size={14} />
-                    </motion.button>
-                  </Link>
                 </div>
               </div>
             </FadeIn>
 
-            {/* Bar chart: before / after metrics */}
             <FadeIn delay={0.2}>
               <div className="p-7 rounded-2xl border border-blue-500/15 bg-[#07070c] h-full">
-                <div className="flex items-center justify-between mb-6">
-                  <div>
-                    <p className="text-zinc-500 text-xs font-mono uppercase tracking-widest mb-1">Impact Metrics</p>
-                    <h4 className="text-white font-bold text-lg">Growth KPIs — Before vs. After</h4>
-                  </div>
-                </div>
+                <p className="text-zinc-500 text-xs font-mono uppercase tracking-widest mb-1">Impact Metrics</p>
+                <h4 className="text-white font-bold text-lg mb-6">Commercialization KPIs — Before vs. After</h4>
                 <BarChart data={[
-                  { label: "Revenue Growth",    before: 18, after: 72, color: "text-blue-400"   },
-                  { label: "Market Share",       before: 12, after: 58, color: "text-indigo-400" },
-                  { label: "Customer Retention", before: 55, after: 88, color: "text-blue-400"   },
-                  { label: "Sales Pipeline",     before: 20, after: 75, color: "text-cyan-400"   },
-                  { label: "Operational Score",  before: 35, after: 80, color: "text-blue-400"   },
+                  { label: "Market Validation Speed", before: 15, after: 78, color: "text-blue-400"   },
+                  { label: "Pilot Conversion Rate",   before: 10, after: 65, color: "text-indigo-400" },
+                  { label: "Investor Readiness",      before: 20, after: 82, color: "text-purple-400" },
+                  { label: "Partner Access",          before: 12, after: 70, color: "text-blue-400"   },
+                  { label: "Commercial Proof Assets", before: 8,  after: 75, color: "text-cyan-400"   },
                 ]} />
                 <div className="flex items-center gap-6 mt-6 pt-5 border-t border-white/5">
                   <div className="flex items-center gap-2">
@@ -809,9 +872,9 @@ export default function ServicesPage() {
           <FadeIn className="mb-12">
             <div className="relative rounded-2xl overflow-hidden h-52 mb-8">
               <img
-                src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1400&q=80"
+                src={CORPORATE_ADVISORY}
                 alt="Corporate advisory"
-                className="w-full h-full object-cover object-center"
+                className="w-full  object-cover object-center"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-[#020202] via-[#020202]/70 to-transparent" />
               <div className="absolute inset-0 flex items-center px-10">
@@ -842,8 +905,7 @@ export default function ServicesPage() {
                   { label: "Investment Banking",       pct: 82, color: "amber" },
                   { label: "Mergers & Acquisitions",   pct: 76, color: "blue"  },
                   { label: "Deal Structuring",         pct: 91, color: "purple"},
-                  { label: "Tax Advisory",             pct: 88, color: "cyan"  },
-                  { label: "Cross-Border",             pct: 70, color: "green" },
+                  { label: "Cross-Border Investments", pct: 70, color: "green" },
                 ].map(({ label, pct, color }, i) => {
                   const a = ACCENT[color];
                   return (
@@ -867,7 +929,7 @@ export default function ServicesPage() {
 
                 <div className="pt-4 border-t border-white/5">
                   <div className="text-4xl font-bold text-amber-400 font-mono mb-1">
-                    <Counter to={5} />
+                    <Counter to={4} />
                   </div>
                   <div className="text-zinc-500 text-xs">Corporate advisory tracks — click below to explore each</div>
                 </div>

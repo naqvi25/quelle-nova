@@ -2,27 +2,28 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Mail, Phone, MapPin, Send, ChevronDown, CheckCircle, Clock, Globe, MessageSquare } from "lucide-react";
+import {
+  Mail, Phone, MapPin, ChevronDown, CheckCircle,
+  Clock, MessageSquare, AlertCircle,
+} from "lucide-react";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import {
   BackgroundDesign, CursorGlow, FadeIn, FadeIn2, SlateBackground,
-  PrimaryButton, SectionLabel, Stagger, StaggerItem,
+  SectionLabel, Stagger, StaggerItem,
 } from "@/components/ui/shared";
 
+// ─── DATA ─────────────────────────────────────────────────────────────────────
+
 const INDUSTRIES = [
-  "Automotive", "Defence & Aerospace", "Apparel & Footwear", "Drones & Components",
-  "Oil & Gas", "Industrial Manufacturing", "Electronics & Electrical", "Mining",
-  "Hunting & Outdoor", "Chemicals & Commodities", "Hand Tools", "Other",
+  "Automotive", "Defence & Aerospace", "Apparel & Footwear", "Drones",
+  "Oil & Gas", "Industrial", "Electronics", "Mining",
+  "Hunting & Outdoor", "Chemicals", "Hand Tools", "Other",
 ];
 
 const SERVICE_TYPES = [
-  "Sourcing & Procurement",
-  "Financial Advisory",
-  "Business Growth Services",
-  "Supplier Partnership",
-  "General Enquiry",
+  "Sourcing Requirement", "Growth Support", "Financial Advisory", "Corporate Advisory", "Investor / Funding Introduction", "Partnership", "Other"
 ];
 
 const FAQ = [
@@ -47,6 +48,11 @@ const FAQ = [
     a: "Yes. Our Financial Advisory and Business Growth Services are offered as standalone engagements and do not require a parallel sourcing mandate.",
   },
 ];
+
+// ─── WHATSAPP NUMBER ──────────────────────────────────────────────────────────
+const WA_NUMBER = "14434162928";
+
+// ─── SELECT DROPDOWN ──────────────────────────────────────────────────────────
 
 function SelectDropdown({ label, options, value, onChange }: {
   label: string; options: string[]; value: string; onChange: (v: string) => void;
@@ -95,35 +101,108 @@ function SelectDropdown({ label, options, value, onChange }: {
   );
 }
 
-function FormField({ label, placeholder, value, onChange, textarea = false }: {
+// ─── FORM FIELD ───────────────────────────────────────────────────────────────
+
+function FormField({
+  label, placeholder, value, onChange,
+  textarea = false, required = false, error = "",
+}: {
   label: string; placeholder: string; value: string;
   onChange: (v: string) => void; textarea?: boolean;
+  required?: boolean; error?: string;
 }) {
-  const base =
-    "w-full px-4 py-3.5 rounded-xl border border-white/8 bg-white/[0.02] text-zinc-200 placeholder:text-zinc-600 hover:border-blue-500/30 hover:bg-white/[0.04] focus:border-blue-500/60 focus:outline-none focus:ring-1 focus:ring-blue-500/20 transition-all text-sm resize-none";
+  const borderCls = error
+    ? "border-red-500/60 focus:border-red-400"
+    : "border-white/8 hover:border-blue-500/30 focus:border-blue-500/60 focus:ring-blue-500/20";
+
+  const base = `w-full px-4 py-3.5 rounded-xl border bg-white/[0.02] text-zinc-200 placeholder:text-zinc-600 hover:bg-white/[0.04] focus:outline-none focus:ring-1 transition-all text-sm resize-none ${borderCls}`;
+
   return (
     <div>
-      <label className="block text-xs font-semibold text-zinc-400 uppercase tracking-widest mb-2">{label}</label>
+      <label className="block text-xs font-semibold text-zinc-400 uppercase tracking-widest mb-2">
+        {label}
+        {required && <span className="text-red-400 ml-1">*</span>}
+      </label>
       {textarea ? (
-        <textarea rows={4} placeholder={placeholder} value={value} onChange={(e) => onChange(e.target.value)} className={base} />
+        <textarea
+          rows={4} placeholder={placeholder} value={value}
+          onChange={(e) => onChange(e.target.value)} className={base}
+        />
       ) : (
-        <input type="text" placeholder={placeholder} value={value} onChange={(e) => onChange(e.target.value)} className={base} />
+        <input
+          type="text" placeholder={placeholder} value={value}
+          onChange={(e) => onChange(e.target.value)} className={base}
+        />
+      )}
+      {error && (
+        <motion.div
+          initial={{ opacity: 0, y: -4 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="flex items-center gap-1.5 mt-1.5"
+        >
+          <AlertCircle size={12} className="text-red-400 shrink-0" />
+          <p className="text-red-400 text-xs">{error}</p>
+        </motion.div>
       )}
     </div>
   );
 }
 
+// ─── PAGE ─────────────────────────────────────────────────────────────────────
+
 export default function ContactPage() {
   const [form, setForm] = useState({
-    name: "", email: "", company: "", phone: "", industry: "", service: "", message: "",
+    name: "", email: "", company: "", phone: "",
+    industry: "", service: "", message: "",
   });
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitted, setSubmitted] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
-  const set = (key: string) => (val: string) => setForm((f) => ({ ...f, [key]: val }));
+  const set = (key: string) => (val: string) => {
+    setForm((f) => ({ ...f, [key]: val }));
+    if (errors[key]) setErrors((e) => ({ ...e, [key]: "" }));
+  };
+
+  const validate = () => {
+    const errs: Record<string, string> = {};
+    if (!form.name.trim())    errs.name    = "Full name is required";
+    if (!form.email.trim())   errs.email   = "Email address is required";
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))
+                               errs.email   = "Please enter a valid email address";
+    if (!form.company.trim()) errs.company = "Company name is required";
+    if (!form.message.trim()) errs.message = "Message is required";
+    return errs;
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const errs = validate();
+    if (Object.keys(errs).length > 0) {
+      setErrors(errs);
+      // Scroll to first error
+      const firstKey = Object.keys(errs)[0];
+      document.getElementById(firstKey)?.scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
+    }
+
+    // Build WhatsApp message
+    const lines = [
+      `*New Enquiry from Quelle Nova Website*`,
+      ``,
+      `*Name:* ${form.name}`,
+      `*Email:* ${form.email}`,
+      `*Company:* ${form.company}`,
+      form.phone    ? `*Phone:* ${form.phone}`       : null,
+      form.industry ? `*Industry:* ${form.industry}` : null,
+      form.service  ? `*Service:* ${form.service}`   : null,
+      ``,
+      `*Message:*`,
+      form.message,
+    ].filter((l) => l !== null).join("\n");
+
+    const encoded = encodeURIComponent(lines);
+    window.open(`https://wa.me/${WA_NUMBER}?text=${encoded}`, "_blank");
     setSubmitted(true);
   };
 
@@ -145,7 +224,6 @@ export default function ContactPage() {
           <div className="absolute inset-0 bg-gradient-to-t from-[#020202] via-transparent to-[#020202]/55" />
         </div>
         <div className="absolute inset-0 scanlines pointer-events-none z-[1]" />
-
         <div className="relative z-10 max-w-7xl mx-auto px-6 py-20 w-full">
           <FadeIn2 delay={0.1}>
             <p className="text-zinc-500 text-sm mb-6 tracking-widest uppercase font-mono">
@@ -175,39 +253,73 @@ export default function ContactPage() {
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
 
-            {/* Left: info */}
+            {/* Left: contact info */}
             <div className="lg:col-span-2 space-y-6">
               <FadeIn>
                 <SectionLabel text="Get in Touch" />
                 <h2 className="text-3xl font-bold text-white mt-2 mb-8">Contact Information</h2>
                 <Stagger className="space-y-4">
                   {[
-                    { icon: Mail,   label: "Email",   value: "info@filmsfocus.com",        sub: "We respond within 24 hours" },
-                    { icon: Phone,  label: "Phone",   value: "+1 (443) 416-2928",           sub: "Mon – Fri, 9 AM – 6 PM EST" },
-                    { icon: MapPin, label: "Address", value: "7677 Canton Center Dr Baltimore, Maryland 21202, USA" },
+                    {
+                      icon: Mail, label: "Email", value: "info@filmsfocus.com",
+                      sub: "We respond within 24 hours",
+                      href: "mailto:info@filmsfocus.com",
+                    },
+                    {
+                      icon: Phone, label: "Phone / WhatsApp", value: "+1 (443) 416-2928",
+                      sub: "Mon – Fri, 9 AM – 6 PM EST",
+                      href: `https://wa.me/${WA_NUMBER}`,
+                    },
+                    {
+                      icon: MapPin, label: "Address",
+                      value: "7677 Canton Center Dr, Baltimore, Maryland 21202, USA",
+                      href: "https://www.google.com/maps/search/?api=1&query=7677+Canton+Center+Dr+Baltimore+Maryland+21202",
+                    },
                   ].map((item) => {
                     const Icon = item.icon;
                     return (
                       <StaggerItem key={item.label}>
-                        <motion.div
+                        <motion.a
+                          href={item.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           whileHover={{ x: 4, borderColor: "rgba(59,130,246,0.3)" }}
-                          className="flex items-start gap-4 p-5 rounded-xl border border-white/5 bg-white/[0.01] transition-all group"
+                          className="flex items-start gap-4 p-5 rounded-xl border border-white/5 bg-white/[0.01] transition-all group cursor-pointer block"
                         >
                           <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center shrink-0 group-hover:border-blue-400/40 transition-colors">
                             <Icon className="w-5 h-5 text-blue-400" />
                           </div>
                           <div>
                             <p className="text-zinc-500 text-xs uppercase tracking-widest mb-0.5">{item.label}</p>
-                            <p className="text-white font-semibold text-sm">{item.value}</p>
-                            <p className="text-zinc-500 text-xs mt-0.5">{item.sub}</p>
+                            <p className="text-white font-semibold text-sm group-hover:text-blue-300 transition-colors">{item.value}</p>
+                            {item.sub && <p className="text-zinc-500 text-xs mt-0.5">{item.sub}</p>}
                           </div>
-                        </motion.div>
+                        </motion.a>
                       </StaggerItem>
                     );
                   })}
                 </Stagger>
               </FadeIn>
 
+              {/* WhatsApp direct button */}
+              <FadeIn delay={0.2}>
+                <motion.a
+                  href={`https://wa.me/${WA_NUMBER}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="flex items-center justify-center gap-3 w-full py-3.5 rounded-xl border border-green-500/25 bg-green-500/8 text-green-400 font-semibold text-sm hover:bg-green-500/15 hover:border-green-400/40 transition-all"
+                >
+                  {/* WhatsApp icon */}
+                  <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                  </svg>
+                  Chat on WhatsApp
+                </motion.a>
+              </FadeIn>
+
+              {/* Response times */}
               <FadeIn delay={0.3}>
                 <div className="p-6 rounded-2xl border border-white/5 bg-white/[0.01]">
                   <div className="flex items-center gap-3 mb-5">
@@ -216,10 +328,10 @@ export default function ContactPage() {
                   </div>
                   <div className="space-y-3">
                     {[
-                      ["Sourcing Enquiries",     "1–2 business days"],
-                      ["Financial Advisory",     "Same-day callback"],
-                      ["Partnership Proposals",  "3–5 business days"],
-                      ["General Enquiries",      "Within 24 hours"],
+                      ["Sourcing Enquiries",    "1–2 business days"],
+                      ["Financial Advisory",    "Same-day callback"],
+                      ["Partnership Proposals", "3–5 business days"],
+                      ["General Enquiries",     "Within 24 hours"],
                     ].map(([type, time]) => (
                       <div key={type} className="flex justify-between items-center text-sm border-b border-white/5 pb-3 last:border-0 last:pb-0">
                         <span className="text-zinc-400">{type}</span>
@@ -243,59 +355,117 @@ export default function ContactPage() {
                         className="flex flex-col items-center justify-center py-16 text-center"
                       >
                         <motion.div
-                          className="w-20 h-20 rounded-full bg-blue-500/10 border border-blue-500/30 flex items-center justify-center mb-6"
+                          className="w-20 h-20 rounded-full bg-green-500/10 border border-green-500/30 flex items-center justify-center mb-6"
                           animate={{ scale: [1, 1.05, 1] }}
                           transition={{ duration: 2, repeat: Infinity }}
                         >
-                          <CheckCircle className="w-10 h-10 text-blue-400" />
+                          <CheckCircle className="w-10 h-10 text-green-400" />
                         </motion.div>
-                        <h3 className="text-2xl font-bold text-white mb-3">Message Sent</h3>
-                        <p className="text-zinc-400 max-w-sm leading-relaxed">
-                          Thank you for reaching out. Our team will review your enquiry and get back to you within one business day.
+                        <h3 className="text-2xl font-bold text-white mb-3">Message Sent via WhatsApp</h3>
+                        <p className="text-zinc-400 max-w-sm leading-relaxed mb-2">
+                          Your WhatsApp was opened with your message pre-filled. If it didn't open automatically, tap the button below.
                         </p>
+                        <motion.a
+                          href={`https://wa.me/${WA_NUMBER}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          whileHover={{ scale: 1.03 }}
+                          className="mt-4 flex items-center gap-2 px-6 py-3 rounded-full border border-green-500/30 bg-green-500/10 text-green-400 font-semibold text-sm"
+                        >
+                          Open WhatsApp
+                        </motion.a>
                         <button
                           onClick={() => {
                             setSubmitted(false);
                             setForm({ name: "", email: "", company: "", phone: "", industry: "", service: "", message: "" });
+                            setErrors({});
                           }}
-                          className="mt-8 text-blue-400 text-sm underline underline-offset-4 hover:text-blue-300 transition-colors"
+                          className="mt-6 text-blue-400 text-sm underline underline-offset-4 hover:text-blue-300 transition-colors"
                         >
                           Send another message
                         </button>
                       </motion.div>
                     ) : (
-                      <form onSubmit={handleSubmit} className="space-y-5">
+                      <form onSubmit={handleSubmit} className="space-y-5" noValidate>
                         <div className="flex items-center gap-3 mb-8">
                           <MessageSquare className="w-5 h-5 text-blue-400" />
-                          <h3 className="text-xl font-bold text-white">Submit Your Enquiry</h3>
+                          <div>
+                            <h3 className="text-xl font-bold text-white">Submit Your Enquiry</h3>
+                            <p className="text-zinc-600 text-xs mt-0.5">Fields marked <span className="text-red-400">*</span> are required</p>
+                          </div>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                          <FormField label="Full Name"          placeholder="Your name"         value={form.name}    onChange={set("name")} />
-                          <FormField label="Email Address"      placeholder="you@company.com"   value={form.email}   onChange={set("email")} />
+                          <div id="name">
+                            <FormField
+                              label="Full Name" placeholder="Your name"
+                              value={form.name} onChange={set("name")}
+                              required error={errors.name}
+                            />
+                          </div>
+                          <div id="email">
+                            <FormField
+                              label="Email Address" placeholder="you@company.com"
+                              value={form.email} onChange={set("email")}
+                              required error={errors.email}
+                            />
+                          </div>
                         </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                          <FormField label="Company"            placeholder="Company name"      value={form.company} onChange={set("company")} />
-                          <FormField label="Phone (optional)"   placeholder="+1 443 416 2928"  value={form.phone}   onChange={set("phone")} />
-                        </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                          <SelectDropdown label="Industry"          options={INDUSTRIES}    value={form.industry} onChange={set("industry")} />
-                          <SelectDropdown label="Service Required"  options={SERVICE_TYPES} value={form.service}  onChange={set("service")} />
-                        </div>
-                        <FormField
-                          label="Message"
-                          placeholder="Describe your sourcing requirement, financial need, or enquiry in as much detail as possible..."
-                          value={form.message}
-                          onChange={set("message")}
-                          textarea
-                        />
 
-                        <PrimaryButton className="w-full py-4 text-base mt-2" icon={Send}>
-                          Submit Enquiry
-                        </PrimaryButton>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                          <div id="company">
+                            <FormField
+                              label="Company" placeholder="Company name"
+                              value={form.company} onChange={set("company")}
+                              required error={errors.company}
+                            />
+                          </div>
+                          <FormField
+                            label="Phone (optional)" placeholder="+1 443 416 2928"
+                            value={form.phone} onChange={set("phone")}
+                          />
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                          <SelectDropdown
+                            label="Industry" options={INDUSTRIES}
+                            value={form.industry} onChange={set("industry")}
+                          />
+                          <SelectDropdown
+                            label="Service Required" options={SERVICE_TYPES}
+                            value={form.service} onChange={set("service")}
+                          />
+                        </div>
+
+                        <div id="message">
+                          <FormField
+                            label="Message"
+                            placeholder="Describe your sourcing requirement, financial need, or enquiry in as much detail as possible..."
+                            value={form.message} onChange={set("message")}
+                            textarea required error={errors.message}
+                          />
+                        </div>
+
+                        {/* Submit */}
+                        <motion.button
+                          type="submit"
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                          className="group relative w-full py-4 rounded-xl font-semibold text-white overflow-hidden border border-white/10 bg-white/5 flex items-center justify-center gap-3"
+                        >
+                          <div className="absolute inset-0 bg-gradient-to-r from-green-600 to-emerald-600 opacity-80 group-hover:opacity-100 transition-opacity" />
+                          <div className="absolute left-[-100%] top-0 h-full w-full bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-[-20deg] group-hover:left-[200%] transition-all duration-700" />
+                          <span className="relative z-10 flex items-center gap-2">
+                            {/* WhatsApp icon */}
+                            <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current">
+                              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                            </svg>
+                            Send via WhatsApp
+                          </span>
+                        </motion.button>
 
                         <p className="text-center text-zinc-600 text-xs">
-                          By submitting, you agree to our Privacy Policy. We never share your information with third parties.
+                          Clicking the button will open WhatsApp with your message pre-filled and ready to send.
                         </p>
                       </form>
                     )}

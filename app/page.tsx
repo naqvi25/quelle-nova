@@ -15,6 +15,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 import {WovenLightHero} from "@/components/ui/woven-light-hero";
+import {AUTOMOTIVE, DEFENCE_AND_AEROSPACE, INDUSTRIAL, MINING, ELECTRONICS, OUTDOOR_AND_TACTICAL, OIL_AND_GAS, CHEMICALS, APPAREL_AND_FOOTWEAR, DRONES, HAND_TOOLS } from "@/lib/images/base64";
 
 // ─── TYPES ────────────────────────────────────────────────────────────────────
 
@@ -337,17 +338,17 @@ function Counter({ to, suffix = "", prefix = "" }: { to: number; suffix?: string
 // ─── 3D IMAGE CARD ────────────────────────────────────────────────────────────
 
 const cardImages: Record<string, string> = {
-  "Automotive":          "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=700&q=80",
-  "Defense & Aerospace": "https://images.unsplash.com/photo-1569736934373-53e0e9b34c22?w=700&q=80",
-  "Industrial":          "https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?w=700&q=80",
-  "Mining":              "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=700&q=80",
-  "Electronics":         "https://images.unsplash.com/photo-1518770660439-4636190af475?w=700&q=80",
-  "Outdoor & Tactical":  "https://images.unsplash.com/photo-1486915309851-b0cc1f8a0084?w=700&q=80",
-  "Oil & Gas":           "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=700&q=80",
-  "Chemicals":           "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=700&q=80",
-  "Apparel & Footwear":  "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=700&q=80",
-  "Drones":              "https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=700&q=80",
-  "Hand Tools":          "https://images.unsplash.com/photo-1504148455328-c376907d081c?w=700&q=80",
+  "Automotive":          AUTOMOTIVE,
+  "Defense & Aerospace": DEFENCE_AND_AEROSPACE,
+  "Industrial":          INDUSTRIAL,
+  "Mining":              MINING,
+  "Electronics":         ELECTRONICS,
+  "Outdoor & Tactical":  OUTDOOR_AND_TACTICAL,
+  "Oil & Gas":           OIL_AND_GAS,
+  "Chemicals":           CHEMICALS,
+  "Apparel & Footwear":  APPAREL_AND_FOOTWEAR,
+  "Drones":              DRONES,
+  "Hand Tools":          HAND_TOOLS,
   "CNC Machining":       "https://images.unsplash.com/photo-1581092335397-9583eb92d232?w=700&q=80",
   "Fabrication":         "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=700&q=80",
   "Casting & Forging":   "https://images.unsplash.com/photo-1567789884554-0b844b597180?w=700&q=80",

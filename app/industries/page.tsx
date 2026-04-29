@@ -13,6 +13,7 @@ import {
   BackgroundDesign, CursorGlow, FadeIn, FadeIn2,
   SlateBackground, CTABanner, SectionLabel,
 } from "@/components/ui/shared";
+import {AUTOMOTIVE, DEFENCE_AND_AEROSPACE, INDUSTRIAL, MINING, ELECTRONICS, OUTDOOR_AND_TACTICAL, OIL_AND_GAS, CHEMICALS, APPAREL_AND_FOOTWEAR, DRONES, HAND_TOOLS } from "@/lib/images/base64";
 
 // ─── DATA ─────────────────────────────────────────────────────────────────────
 
@@ -22,7 +23,7 @@ const INDUSTRIES = [
     title: "Automotive",
     sub: "Seating & Interior Supply Chain",
     desc: "Complete automotive sourcing — precision machined components, castings, forgings, interior materials, composites and complete vehicle platforms.",
-    image: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&q=80",
+    image: AUTOMOTIVE,
     href: "/industries/automotive",
     accent: "blue",
   },
@@ -31,7 +32,7 @@ const INDUSTRIES = [
     title: "Defence & Aerospace",
     sub: "Precision Build-to-Print",
     desc: "Mil-spec components, aerostructures, composites, avionics, weapons hardware and high-fidelity training simulators for defence programmes.",
-    image: "https://images.unsplash.com/photo-1569736934373-53e0e9b34c22?w=800&q=80",
+    image: DEFENCE_AND_AEROSPACE,
     href: "/industries/defense-aerospace",
     accent: "purple",
   },
@@ -40,7 +41,7 @@ const INDUSTRIES = [
     title: "Apparel & Footwear",
     sub: "OEM & Private Label",
     desc: "Integrated apparel and footwear production — from design to export-ready bulk supply for brands, retailers and institutional buyers.",
-    image: "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=800&q=80",
+    image: APPAREL_AND_FOOTWEAR,
     href: "/industries/apparel-footwear",
     accent: "blue",
   },
@@ -49,7 +50,7 @@ const INDUSTRIES = [
     title: "Drones & Components",
     sub: "UAV Systems & Parts",
     desc: "Propulsion, avionics, platforms, defence ISR systems and structures engineering for commercial, agricultural and defence UAV programmes.",
-    image: "https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=800&q=80",
+    image: DRONES,
     href: "/industries/drones",
     accent: "purple",
   },
@@ -58,7 +59,7 @@ const INDUSTRIES = [
     title: "Oil & Gas",
     sub: "Upstream & Downstream",
     desc: "Hydraulic fittings, multi-grade piping, valves, steam systems, forged components and power generation for the full O&G value chain.",
-    image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&q=80",
+    image: OIL_AND_GAS,
     href: "/industries/oil-gas",
     accent: "blue",
   },
@@ -67,7 +68,7 @@ const INDUSTRIES = [
     title: "Industrial Manufacturing",
     sub: "Automation & Engineering",
     desc: "Control panels, automation systems, precision CNC parts, forged components, valves, pumps and instrumentation across process industries.",
-    image: "https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?w=800&q=80",
+    image: INDUSTRIAL,
     href: "/industries/industrial",
     accent: "purple",
   },
@@ -76,7 +77,7 @@ const INDUSTRIES = [
     title: "Electronics & Electrical",
     sub: "Sensors, Power & Appliances",
     desc: "Environmental sensors, passive components, power distribution, panel & switchgear systems and consumer electronics for OEM programs.",
-    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80",
+    image: ELECTRONICS,
     href: "/industries/electronics",
     accent: "blue",
   },
@@ -85,7 +86,7 @@ const INDUSTRIES = [
     title: "Mining",
     sub: "Equipment, Drilling & Environmental",
     desc: "Heavy-duty mining equipment, precision drilling tools, wear parts and integrated environmental dust control systems.",
-    image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80",
+    image: MINING,
     href: "/industries/mining",
     accent: "purple",
   },
@@ -94,7 +95,7 @@ const INDUSTRIES = [
     title: "Hunting & Outdoor",
     sub: "Tactical, Optics & Gear",
     desc: "Thermal optics, tactical gear, hunting decoys, climbing ropes, heated apparel and machined accessories for outdoor and tactical programs.",
-    image: "https://images.unsplash.com/photo-1486915309851-b0cc1f8a0084?w=800&q=80",
+    image: OUTDOOR_AND_TACTICAL,
     href: "/industries/hunting-outdoor",
     accent: "blue",
   },
@@ -103,7 +104,7 @@ const INDUSTRIES = [
     title: "Chemicals & Commodities",
     sub: "Specialty & Industrial",
     desc: "Fragrance ingredients, nutraceuticals, industrial amines, strategic metals and environmental control chemicals sourced to specification.",
-    image: "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=800&q=80",
+    image: CHEMICALS,
     href: "/industries/chemicals",
     accent: "purple",
   },
@@ -112,7 +113,7 @@ const INDUSTRIES = [
     title: "Hand Tools",
     sub: "Professional Grade",
     desc: "Professional hand tools, automotive tools, measuring instruments and precision tools for industrial, retail and export programs.",
-    image: "https://images.unsplash.com/photo-1504148455328-c376907d081c?w=800&q=80",
+    image: HAND_TOOLS,
     href: "/industries/hand-tools",
     accent: "blue",
   },
@@ -281,35 +282,6 @@ export default function IndustriesPage() {
           </div>
         </div>
       </section>
-
-      {/* ── Why Choose Us ─────────────────────────────────── */}
-      {/* <section className="py-24 bg-[#020202] border-y border-white/5">
-  <div className="max-w-7xl mx-auto px-6">
-    <FadeIn className="text-center mb-14">
-      <SectionLabel text="Why Source Through Us" />
-      <h2 className="text-4xl font-bold text-white mt-3">The Quelle Nova Difference</h2>
-    </FadeIn>
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-      {WHY.map((v, i) => (
-        <motion.div
-          key={v.title}
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.6, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <div className="p-8 rounded-2xl border border-white/5 bg-white/[0.01] hover:border-blue-500/25 hover:-translate-y-1.5 transition-all duration-300 group h-full cursor-default">
-            <div className="w-1 h-10 bg-gradient-to-b from-blue-500 to-purple-600 rounded-full mb-6" />
-            <h3 className="text-white font-bold text-xl mb-3 group-hover:text-blue-300 transition-colors">
-              {v.title}
-            </h3>
-            <p className="text-zinc-400 text-sm leading-relaxed">{v.desc}</p>
-          </div>
-        </motion.div>
-      ))}
-    </div>
-  </div>
-</section> */}
 
       <CTABanner />
       <Footer />
