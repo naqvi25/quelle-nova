@@ -62,15 +62,14 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
 
           {/* Logo */}
-          <Link href="/" className="text-xl font-bold tracking-tighter text-white flex items-center gap-2 group">
-            <motion.div
-              whileHover={{ rotate: 180, scale: 1.1 }}
-              transition={{ duration: 0.4 }}
-              className="w-6 h-6 rounded-md bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-[0_0_15px_rgba(59,130,246,0.5)]"
-            >
-              <div className="w-3 h-3 bg-[#020202] rounded-sm" />
-            </motion.div>
-            <span className="group-hover:text-blue-300 transition-colors duration-300">Quelle Nova</span>
+          <Link href="/">
+            <motion.img
+              src="/LOGO_MAIN_QUELLENOVA@2x.png"
+              alt="Quelle Nova"
+              className="h-14 w-auto object-contain"
+              whileHover={{ scale: 1.04 }}
+              transition={{ duration: 0.3 }}
+            />
           </Link>
 
           {/* Desktop nav */}
