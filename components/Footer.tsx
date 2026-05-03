@@ -44,12 +44,16 @@ export default function Footer() {
 
           {/* Brand */}
           <div>
-            <motion.div className="flex items-center gap-2 mb-5" whileHover={{ x: 3 }}>
-              <div className="w-7 h-7 rounded-md bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-[0_0_12px_rgba(59,130,246,0.4)]">
-                <div className="w-3.5 h-3.5 bg-[#020202] rounded-sm" />
-              </div>
-              <span className="text-white font-bold text-lg tracking-tight">Quelle Nova</span>
-            </motion.div>
+            {/* Logo */}
+          <Link href="/">
+            <motion.img
+              src="/LOGO_MAIN_QUELLENOVA@2x.png"
+              alt="Quelle Nova"
+              className="h-14 w-auto object-contain"
+              whileHover={{ scale: 1.04 }}
+              transition={{ duration: 0.3 }}
+            />
+          </Link>
             <p className="text-zinc-500 text-sm leading-relaxed mb-6">
               B2B sourcing platform connecting global buyers with verified manufacturers across complex industrial supply chains.
             </p>

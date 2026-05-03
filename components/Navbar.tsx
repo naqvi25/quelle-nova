@@ -18,6 +18,7 @@ const INDUSTRIES = [
   { label: "Hunting & Outdoor",          href: "/industries/hunting-outdoor" },
   { label: "Chemicals & Commodities",    href: "/industries/chemicals" },
   { label: "Hand Tools",                 href: "/industries/hand-tools" },
+  { label: "Packaging Films",            href: "/industries/packaging-films" },
 ];
 
 const SERVICES = [
