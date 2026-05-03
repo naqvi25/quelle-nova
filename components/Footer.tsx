@@ -16,13 +16,13 @@ const INDUSTRIES = [
   { label: "Apparel & Footwear",    href: "/industries/apparel-footwear" },
   { label: "Drones & Components",   href: "/industries/drones" },
   { label: "Hand Tools",            href: "/industries/hand-tools" },
+  { label: "Packaging Films",       href: "/industries/packaging-films" },
 ];
 
 const COMPANY = [
   { label: "About Us",           href: "/about" },
   { label: "Capabilities",       href: "/capabilities" },
-  { label: "Financial Services", href: "/services/financial" },
-  { label: "Business Growth",    href: "/services/growth" },
+  { label: "Services",           href: "/services" },
   { label: "Contact Us",         href: "/contact" },
 ];
 

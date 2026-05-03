@@ -21,7 +21,7 @@ const CATEGORIES = [
       {
         icon: Shirt,
         title: "Men's Apparel",
-        image: "https://images.unsplash.com/photo-1516257984-b1b4d707412e?w=600&q=80",
+        image: "/images/MenApparel.jpg",
         items: ["Casual & formal shirts, trousers & chinos","T-shirts, polos & knitwear","Denim jeans & workwear","Suits, blazers & formal wear","Seasonal & fashion collections"],
       },
       {
@@ -59,7 +59,7 @@ const CATEGORIES = [
       {
         icon: Shield,
         title: "Sports & Formal Footwear",
-        image: "https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=600&q=80",
+        image: "/images/SportsFormalFootwear.jpg",
         items: ["Running, training & court shoes","Leather oxfords, derbies & dress shoes","Hiking boots & trail runners","Safety & occupational footwear","Basketball & sports performance shoes"],
       },
     ],
@@ -114,7 +114,7 @@ export default function ApparelFootwearPage() {
         title="Integrated Apparel &"
         titleAccent="Footwear Sourcing"
         subtitle="End-to-end apparel and footwear production — from design to export-ready bulk supply — for brands, retailers and institutional buyers worldwide."
-        image="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=1600&q=80"
+        image="/images/ApparelFootwear.jpg"
         breadcrumb="Industries / Apparel & Footwear"
       />
 

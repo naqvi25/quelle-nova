@@ -15,22 +15,12 @@ import {
   Stagger, StaggerItem,
 } from "@/components/ui/shared";
 
-import {PLAIN_BOPP_FILMS} from "@/lib/images/base64";
-import {HEAT_SEALABLE_BOPP_FILMS} from "@/lib/images/base64";
-import {BARRIER_MOISTURE_RESISTANT} from "@/lib/images/base64";
-import {MATTE_WHITE} from "@/lib/images/base64";
-import {LABELS_AND_SLEEVES} from "@/lib/images/base64";
-import {LAMINATION_FILMS} from "@/lib/images/base64";
-import {STANDARD_BOPET_FILMS, METALLIZED_PET_FILMS, COATED_SPECIALITY_BOPET, PET_SHRINK_FILMS, INDUSTRIAL_TECHNICAL_BOPET, HIGH_BARRIER_BOPET_STRUCTURES} from "@/lib/images/base64";
+import {PLAIN_BOPP_FILMS, HEAT_SEALABLE_BOPP_FILMS, BARRIER_MOISTURE_RESISTANT, MATTE_WHITE, LABELS_AND_SLEEVES, LAMINATION_FILMS } from "@/lib/images/films";
+import {STANDARD_BOPET_FILMS, METALLIZED_PET_FILMS, COATED_SPECIALITY_BOPET, PET_SHRINK_FILMS, INDUSTRIAL_TECHNICAL_BOPET, HIGH_BARRIER_BOPET_STRUCTURES} from "@/lib/images/films";
 import {HOLOGRAPHIC_BOPP_FILMS, HOLOGRAPHIC_METALLIZED_FILMS, SECURITY_POUCHES, ANTI_COUNTERFEIT_FILMS_LABELS, HOT_STAMPING_HOLOGRAPHIC_FILMS} from "@/lib/images/films";
 import {HAND_HELD_INDUCTION_WADS, INLINE_INDUCTION_SEALING_SYSTEMS, INDUCTION_FOIL_LINERS_SEALS, INDUCTION_SEALING_ADDONS_ACCESSORIES} from "@/lib/images/films";
 import {SINGLE_STAGE_COATING_MACHINES, COATING_LAMINATION_MACHINES, TANDEM_COATING_LINES, PILCOAT_COATING_SYSTEMS, FINO_FORTE_SLITTING_MACHINES, EXATO_CUTTING_MACHINES_MODULES} from "@/lib/images/films";
 import {PHARMACEUTICAL_AND_MEDICAL} from "@/lib/images/films";
-
-
-// import {} from "@/lib/images/base64";
-
-
 
 
 // ─── DATA ─────────────────────────────────────────────────────────────────────
@@ -457,7 +447,7 @@ export default function PackagingFilmsPage() {
         title="Packaging Films &"
         titleAccent="Converting Solutions"
         subtitle="Premium BOPP, PET and holographic films alongside industrial converting machinery — sourced from verified global manufacturers for flexible packaging, labelling and security applications."
-        image="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&q=80"
+        image="/images/Packaging_Films.jpg"
         breadcrumb="Industries / Packaging Films"
       />
 

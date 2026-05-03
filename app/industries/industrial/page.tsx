@@ -126,7 +126,7 @@ export default function IndustrialPage() {
         title="Engineering & Automation"
         titleAccent="Component Sourcing"
         subtitle="Control panels, automation systems, precision CNC parts, forged components, valves, pumps and instrumentation across process and discrete manufacturing industries."
-        image="https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?w=1600&q=80"
+        image="/images/industrial-hero.jpg"
         breadcrumb="Industries / Industrial"
       />
 

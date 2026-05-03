@@ -68,7 +68,7 @@ export default function AboutPage() {
       <section ref={heroRef} className="relative min-h-[80vh] flex items-center overflow-hidden pt-20">
         <motion.div className="absolute inset-0 z-0 scale-110" style={{ y: bgY }}>
           <img
-            src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=1600&q=80"
+            src="/images/pexels-yankrukov-7793692.jpg"
             alt=""
             className="w-full h-full object-cover object-center"
           />
@@ -235,7 +235,7 @@ export default function AboutPage() {
             <FadeIn delay={0.25}>
               <div className="relative rounded-2xl overflow-hidden h-[500px]">
                 <motion.img
-                  src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=900&q=80"
+                  src="/images/pexels-towfiqu-barbhuiya-3440682-11412596.jpg"
                   alt="Manufacturing"
                   className="w-full h-full object-cover"
                   whileHover={{ scale: 1.04 }}
